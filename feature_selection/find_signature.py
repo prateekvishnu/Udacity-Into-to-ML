@@ -38,6 +38,45 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+import numpy as np
+clf = tree.DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+print 'Accuracy of test samples %f' % (accuracy_score(labels_test, pred))
+
+# print features importance
+feat_importance = clf.feature_importances_
+most_important_feat = np.argmax(feat_importance)
+print 'Feature that is most important feature %d with significance %f' % (most_important_feat, np.max(feat_importance))
+voc_list = vectorizer.get_feature_names()
+print 'The corresponding voca word to the most imporant feature: %s' % voc_list[most_important_feat]
+
+outliers = feat_importance > 0.2
+print 'Number of ouliers: %d' % np.sum(outliers)
+
+###########################################################################################
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier()
+clf.fit(features_train,labels_train)
+clf.score(features_test,labels_test)
+
+importances = clf.feature_importances_
+import numpy as np
+indices = np.argsort(importances)[::-1]
+print 'Feature Ranking: '
+for i in range(10):
+    print "{} feature no.{} ({})".format(i+1,indices[i],importances[indices[i]])
+	
+print ""
+print vectorizer.get_feature_names()[33614]
+print vectorizer.get_feature_names()[14343]
+print vectorizer.get_feature_names()[21323]
+
+print clf.score(features_test,labels_test)
+
+
 
 
 
